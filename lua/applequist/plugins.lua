@@ -31,13 +31,29 @@ local function spec(use)
         "jacoborus/tender.vim",
     }
 
+    -- Things that enhance builtin behaviours or could easily be candidates for default behaviour
+    use {
+        "antoinemadec/FixCursorHold.nvim",
+        "nvim-lualine/lualine.nvim",
+        {
+            "editorconfig/editorconfig-vim",
+            setup = function()
+                vim.g.EditorConfig_max_line_indicator = ""
+                vim.g.EditorConfig_preserve_formatoptions = 1
+            end,
+        },
+        "akinsho/toggleterm.nvim",
+    }
+
     -- Autocompletion framework
     use {
         "hrsh7th/nvim-cmp",
         requires = {
-            "hrsh7th/cmp-buffer",
+            "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lsp-signature-help",
             "saadparwaiz1/cmp_luasnip", 
             {
@@ -47,9 +63,44 @@ local function spec(use)
         },
     }
 
-    -- Things that enhance builtin behaviours or could easily be candidates for default behaviour
+    -- Treesitter
     use {
-        "nvim-lualine/lualine.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+        requires = {
+            "nvim-treesitter/playground",
+            "nvim-treesitter/nvim-treesitter-textobjects"
+        }
+    }
+
+    -- Debugging and tests
+    use {
+        {
+            "nvim-neotest/neotest",
+            requires = {
+                "haydenmeade/neotest-jest",
+                "rouge8/neotest-rust",
+                "nvim-neotest/neotest-plenary",
+            },
+        },
+        "mfussenegger/nvim-dap",
+        "rcarriga/nvim-dap-ui",
+        "theHamsta/nvim-dap-virtual-text",
+        { "williamboman/nvim-dap-vscode-js", branch = "feat/debug-cmd" },
+        "jbyuki/one-small-step-for-vimkind",
+    }
+
+    -- Mason
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim"
+    }
+
+    -- LSP
+    use {
+        "simrat39/rust-tools.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+        "jose-elias-alvarez/typescript.nvim"
     }
 
 end
